@@ -13,7 +13,7 @@ services:
       - LDAP_ADMIN_USERNAME=${ADMIN_USERNAME}
       - LDAP_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - LDAP_USERS=user01,user02
-      - LDAP_PASSWORDS=password1,password2
+      - LDAP_PASSWORDS=${USER1_PASSSWORD},${USER2_PASSWORD}
     networks:
       - my-network
     volumes:
