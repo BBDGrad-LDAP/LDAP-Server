@@ -1,0 +1,23 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  checks: write
+  contents: write
+  id-token: write
+  security-events: write
+
+jobs:
+  proj-ci:
+    name: CI
+    uses: ./.github/workflows/proj-ci.yaml
+    secrets: inherit
+
+  terraform-cd:
+    name: Terraform CD
+    needs: proj-ci
+    secrets: inherit
+    uses: ./.github/workflows/terraform-cd.yaml
