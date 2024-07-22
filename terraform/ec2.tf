@@ -51,6 +51,15 @@ output "private_key_pem" {
   sensitive = true
 }
 
+# resource "aws_ami" "ldap_server_ami" {
+#   name                = "ldap-server-ami"
+#   root_device_name    = "/dev/xvda"
+#   ebs_block_device {
+#     device_name = "/dev/xvda"
+#     volume_size = 8
+#   }
+# }
+
 resource "aws_instance" "ldap_server" {
   ami           = "ami-0b995c42184e99f98"
   instance_type = "t2.micro"
