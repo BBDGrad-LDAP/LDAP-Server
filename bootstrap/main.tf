@@ -23,17 +23,17 @@ resource "aws_dynamodb_table" "terraform_state_lock" {
   }
 }
 
-data "tls_certificate" "githubActions" {
+data "tls_certificate" "github_actions" {
   url = "https://token.actions.githubusercontent.com"
 }
 
-resource "aws_iam_openid_connect_provider" "githubActions" {
+resource "aws_iam_openid_connect_provider" "github_actions" {
   url             = "https://token.actions.githubusercontent.com"
   client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = distinct(concat(data.tls_certificate.githubActions.certificates[*].sha1_fingerprint, ["6938fd4d98bab03faadb97b34396831e3780aea1", "1c58a3a8518e8759bf075b76b750d4f2df264fcd", "1b511abead59c6ce207077c0bf0e0043b1382612"]))
+  thumbprint_list = distinct(concat(data.tls_certificate.github_actions.certificates[*].sha1_fingerprint, ["6938fd4d98bab03faadb97b34396831e3780aea1", "1c58a3a8518e8759bf075b76b750d4f2df264fcd"]))
 }
 
-resource "aws_iam_role" "githubActions" {
+resource "aws_iam_role" "github_actions" {
   name                 = "GithubRunnerRole"
   assume_role_policy   = local.trust_policy
   managed_policy_arns  = ["arn:aws:iam::aws:policy/AdministratorAccess"]
@@ -41,7 +41,7 @@ resource "aws_iam_role" "githubActions" {
 }
 
 output "githubActionsRole" {
-  value = aws_iam_role.githubActions.arn
+  value = aws_iam_role.github_actions.arn
 }
 
 locals {
@@ -60,7 +60,7 @@ locals {
               "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
             },
             "StringLike" : {
-              "token.actions.githubusercontent.com:sub" : "repo:bbd-miniconomy-commercial-bank/*:*"
+              "token.actions.githubusercontent.com:sub" : "repo:BBDGrad-LDAP/LDAP-Server:*"
             }
           }
         }
