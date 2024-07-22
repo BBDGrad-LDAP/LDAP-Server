@@ -1,2 +1,11 @@
+# environment variables
 .env
+
+#docker storage volume
 storage/*
+
+# Terraform
+.terraform
+
+# SSH Keys
+LDAPServerSSHKey.pem
