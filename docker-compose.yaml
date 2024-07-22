@@ -13,7 +13,7 @@ services:
       - LDAP_USERS=user01,user02
       - LDAP_PASSWORDS=${USER1_PASSSWORD},${USER2_PASSWORD}
     volumes:
-      - './containerFiles:/bitnami/openldap'
+      - './storage:/bitnami/openldap'
   myapp:
     image: 'bitnami/openldap'
 volumes:
