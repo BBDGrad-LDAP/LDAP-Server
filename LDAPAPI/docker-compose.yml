@@ -17,7 +17,7 @@ services:
     volumes:
       - 'openldap_data:/bitnami/openldap'
   api:
-    build: ./LDAPAPI
+    build: .
     ports: 
       - '3000:3000'
     depends_on:
