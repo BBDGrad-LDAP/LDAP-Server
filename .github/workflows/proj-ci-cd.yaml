@@ -26,4 +26,4 @@ jobs:
     name: LDAP CD
     needs: terraform-cd
     secrets: inherit
-    uses: ./.github/workflows/db-cd.yaml
+    uses: ./.github/workflows/ldap-cd.yaml
