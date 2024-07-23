@@ -30,7 +30,7 @@ jobs:
 
       - name: Set SSH Key and Know Hosts
         run: |
-          echo "${{ secrets.LDAP_SERVER_SSH_KEY }}"" > pvt_key.pem
+          echo "${{ secrets.LDAP_SERVER_SSH_KEY }}" > pvt_key.pem
           chmod 600 pvt_key.pem
           mkdir -p ~/.ssh
           ssh-keyscan ${{env.EC2_URL}} >> ~/.ssh/known_hosts
