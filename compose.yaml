@@ -1,8 +1,8 @@
-name: bbdgrad-ldap
 version: '2'
 
 services:
   openldap:
+    container_name: ldap-server
     image: bitnami/openldap:2
     ports:
       - '1389:1389'
@@ -11,11 +11,6 @@ services:
       - LDAP_ADMIN_USERNAME=${ADMIN_USERNAME}
       - LDAP_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - LDAP_USERS=user01,user02
-      - LDAP_PASSWORDS=${USER1_PASSSWORD},${USER2_PASSWORD}
+      - LDAP_PASSWORDS=${USER_PASSWORDS}
     volumes:
       - './storage:/bitnami/openldap'
-  myapp:
-    image: 'bitnami/openldap'
-volumes:
-  openldap_data:
-    driver: local
