@@ -21,3 +21,9 @@ jobs:
     needs: proj-ci
     secrets: inherit
     uses: ./.github/workflows/terraform-cd.yaml
+
+  db-cd:
+    name: LDAP CD
+    needs: terraform-cd
+    secrets: inherit
+    uses: ./.github/workflows/ldap-cd.yaml

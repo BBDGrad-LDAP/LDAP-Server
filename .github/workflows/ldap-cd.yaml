@@ -1,0 +1,49 @@
+name: LDAP CD
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  ldap-cd:
+    name: LDAP CD
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@main
+        with:
+          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-session-name: Terraform_CD_GitHub_to_AWS_via_FederatedOIDC
+
+      - name: Get LDAP Server URL
+        run: |
+          EC2_IP=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=LDAP Server" --query "Reservations[*].Instances[*].PublicDnsName" --output text --region ${{ secrets.AWS_REGION }})
+          echo "EC2_URL=$EC2_IP" >> $GITHUB_ENV
+
+      - name: Set SSH Key and Know Hosts
+        run: |
+          echo "${{ secrets.LDAP_SERVER_SSH_KEY }}" > pvt_key.pem
+          chmod 600 pvt_key.pem
+          mkdir -p ~/.ssh
+          ssh-keyscan ${{env.EC2_URL}} >> ~/.ssh/known_hosts
+
+      - name: Upload to EC2
+        run: |
+          ssh -i pvt_key.pem ec2-user@${{ env.EC2_URL }} "sudo systemctl stop ldap.service && \
+          rm /home/ec2-user/ldap/compose.yaml"
+          tar -czf ldap_archive.tar.gz compose.yaml
+          scp -i pvt_key.pem ldap_archive.tar.gz ec2-user@${{ env.EC2_URL }}:/home/ec2-user/ldap/
+          ssh -i pvt_key.pem ec2-user@${{ env.EC2_URL }} "tar -xzvf /home/ec2-user/ldap/ldap_archive.tar.gz -C /home/ec2-user/ldap && \
+          rm /home/ec2-user/ldap/ldap_archive.tar.gz && \
+          export ADMIN_USERNAME="${{ secrets.LDAP_SEVER_ADMIN_USER }}" && \
+          export ADMIN_PASSWORD="${{ secrets.LDAP_SEVER_ADMIN_PASSWORD }}" && \
+          export USER_PASSWORDS="${{ secrets.LDAP_SEVER_USER_PASSWORDS }}" && \
+          sudo systemctl start ldap.service"

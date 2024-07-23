@@ -23,7 +23,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@main
         with:
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE }}
-          aws-region: eu-west-1
+          aws-region: ${{ secrets.AWS_REGION }}
           role-session-name: Terraform_CD_GitHub_to_AWS_via_FederatedOIDC
 
       - name: Terraform Init
