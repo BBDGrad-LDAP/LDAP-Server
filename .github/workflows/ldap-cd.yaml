@@ -35,15 +35,16 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan ${{env.EC2_URL}} >> ~/.ssh/known_hosts
 
+      - name: Create Env File
+        run: |
+          echo "${{ secrets.LDAP_SERVER_ENV_FILE }}" > .env
+
       - name: Upload to EC2
         run: |
           ssh -i pvt_key.pem ec2-user@${{ env.EC2_URL }} "sudo systemctl stop ldap.service && \
           rm /home/ec2-user/ldap/compose.yaml"
-          tar -czf ldap_archive.tar.gz compose.yaml
+          tar -czf ldap_archive.tar.gz compose.yaml .env
           scp -i pvt_key.pem ldap_archive.tar.gz ec2-user@${{ env.EC2_URL }}:/home/ec2-user/ldap/
           ssh -i pvt_key.pem ec2-user@${{ env.EC2_URL }} "tar -xzvf /home/ec2-user/ldap/ldap_archive.tar.gz -C /home/ec2-user/ldap && \
           rm /home/ec2-user/ldap/ldap_archive.tar.gz && \
-          export ADMIN_USERNAME="${{ secrets.LDAP_SEVER_ADMIN_USER }}" && \
-          export ADMIN_PASSWORD="${{ secrets.LDAP_SEVER_ADMIN_PASSWORD }}" && \
-          export USER_PASSWORDS="${{ secrets.LDAP_SEVER_USER_PASSWORDS }}" && \
           sudo systemctl start ldap.service"
