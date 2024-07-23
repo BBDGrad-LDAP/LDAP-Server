@@ -1,8 +1,7 @@
 const express = require("express");
 const authRouter = express.Router();
 const { OAuth2Client } = require('google-auth-library');
-import runLDAPQuery from '../ldapClient.js'
-require('dotenv').config();
+import runLDAPQuery from '../ldapClient.js';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, process.env.GOOGLE_REDIRECT_URI);
 
