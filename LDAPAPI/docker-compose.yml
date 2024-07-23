@@ -1,21 +1,23 @@
 networks:
-  my-network:
+  custom-network:
     driver: bridge
+    
 services:
   openldap:
+    container_name: ldap-server
     image: bitnami/openldap:2
     ports:
-      - '1389:1389'
-      - '1636:1636'
+      - '389:1389'
+      - '636:1636'
     environment:
-      - LDAP_ADMIN_USERNAME=admin
-      - LDAP_ADMIN_PASSWORD=adminpassword
+      - LDAP_ADMIN_USERNAME=${ADMIN_USERNAME}
+      - LDAP_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - LDAP_USERS=user01,user02
-      - LDAP_PASSWORDS=password1,password2
+      - LDAP_PASSWORDS=${USER_PASSWORDS}
     networks:
-      - my-network
+      - custom-network
     volumes:
-      - 'openldap_data:/bitnami/openldap'
+      - './storage:/bitnami/openldap'
   api:
     build: .
     ports: 
@@ -23,7 +25,7 @@ services:
     depends_on:
       - openldap
     networks:
-      - my-network
+      - custom-network
 
 volumes:
   openldap_data:
