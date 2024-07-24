@@ -8,9 +8,18 @@ services:
       - '389:1389'
       - '636:1636'
     environment:
+      - LDAP_ADD_SCHEMAS=yes
+      - LDAP_EXTRA_SCHEMAS=cosine,inetorgperson,nis
       - LDAP_ADMIN_USERNAME=${ADMIN_USERNAME}
       - LDAP_ADMIN_PASSWORD=${ADMIN_PASSWORD}
-      - LDAP_USERS=user01,user02
-      - LDAP_PASSWORDS=${USER_PASSWORDS}
+      # - LDAP_USERS=user01,user02
+      # - LDAP_PASSWORDS=${USER_PASSWORDS}
+      - LDAP_ROOT=dc=callcenter,dc=org
+      - BITNAMI_DEBUG=true
+      - LDAP_CUSTOM_SCHEMA_FILE=Customldifs/default.ldif
+      # - LDAP_SKIP_DEFAULT_TREE=yes
+      # - LDAP_CUSTOM_SCHEMA_DIR=Customldifs/
+      # - LDAP_ALLOW_ANON_BINDING=no #uncomment this force login
     volumes:
-      - './storage:/bitnami/openldap'
+      # - './storage:/bitnami/openldap'
+      - ./Customldifs:/Customldifs
