@@ -1,0 +1,57 @@
+version: 1
+
+dn: dc=callcenter,dc=org
+objectClass: dcObject
+objectClass: organization
+dc: callcenter
+o: example
+
+dn: ou=users,dc=callcenter,dc=org
+objectClass: organizationalUnit
+ou: users
+
+dn: cn=user01,ou=users,dc=callcenter,dc=org
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: user01
+cn: User1
+gidNumber: 1000
+homeDirectory: /home/user01
+sn: Bar1
+uid: user01
+uidNumber: 1000
+userPassword:: Yml0bmFtaTE=
+
+dn: cn=user02,ou=users,dc=callcenter,dc=org
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: user02
+cn: User2
+gidNumber: 1001
+homeDirectory: /home/user02
+sn: Bar2
+uid: user02
+uidNumber: 1001
+userPassword:: Yml0bmFtaTI=
+
+dn: cn=user03,ou=users,dc=callcenter,dc=org
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: user03
+cn: User3
+gidNumber: 1002
+homeDirectory: /home/user03
+sn: Bar2
+uid: user03
+uidNumber: 1002
+userPassword:: Yml0bmFtaTI=
+
+dn: cn=readers,ou=users,dc=callcenter,dc=org
+objectClass: groupOfNames
+cn: readers
+member: cn=user01,ou=users,dc=callcenter,dc=org
+member: cn=user02,ou=users,dc=callcenter,dc=org
+member: cn=user03,ou=users,dc=callcenter,dc=org
