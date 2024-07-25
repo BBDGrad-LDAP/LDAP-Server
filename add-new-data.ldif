@@ -1,0 +1,23 @@
+dn: ou=NewData,dc=callcenter, dc=org
+objectClass: organizationalUnit
+ou: NewData
+
+dn: cn=comp-NewData-01,ou=NewData,dc=callcenter,dc=org
+objectClass: device
+cn: comp-NewData-01
+description: Macbook
+
+dn: uid=nPerson,ou=NewData,dc=callcenter,dc=org
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+uid: nPerson
+cn: New Person
+sn: Person
+mail: newPerson@casualcallers.co.za
+telephoneNumber: +27888888888
+employeeNumber: 999
+employeeType: Full-Time
+title: Manager
+o: Casual Callers
