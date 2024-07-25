@@ -1,0 +1,18 @@
+dn: uid=resterhuysen,dc=callcenter,dc=org
+changetype: modify
+replace: employeeType
+employeeType: Part-Time
+
+dn: uid=resterhuysen,dc=callcenter,dc=org
+changetype: modify
+replace: title
+title: CIO
+
+dn: uid=resterhuysen,dc=callcenter,dc=org
+changetype: modify
+replace: mail
+mail: mmeyers@casualcallers.co.za
+
+dn: uid=resterhuysen,dc=callcenter,dc=org
+changetype: modify
+delete: telephoneNumber
