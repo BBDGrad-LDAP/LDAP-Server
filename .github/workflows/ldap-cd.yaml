@@ -43,7 +43,7 @@ jobs:
         run: |
           ssh -i pvt_key.pem ec2-user@${{ env.EC2_URL }} "sudo systemctl stop ldap.service && \
           rm /home/ec2-user/ldap/compose.yaml"
-          tar -czf ldap_archive.tar.gz compose.yaml .env /CustomIdifs
+          tar -czf ldap_archive.tar.gz compose.yaml .env Customldifs
           scp -i pvt_key.pem ldap_archive.tar.gz ec2-user@${{ env.EC2_URL }}:/home/ec2-user/ldap/
           ssh -i pvt_key.pem ec2-user@${{ env.EC2_URL }} "tar -xzvf /home/ec2-user/ldap/ldap_archive.tar.gz -C /home/ec2-user/ldap && \
           rm /home/ec2-user/ldap/ldap_archive.tar.gz && \
