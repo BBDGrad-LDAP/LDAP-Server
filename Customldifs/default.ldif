@@ -4,7 +4,7 @@ dn: dc=callcenter,dc=org
 objectClass: dcObject
 objectClass: organization
 dc: callcenter
-o: example
+o: callcenter
 
 dn: ou=users,dc=callcenter,dc=org
 objectClass: organizationalUnit
@@ -21,7 +21,7 @@ homeDirectory: /home/user01
 sn: Bar1
 uid: user01
 uidNumber: 1000
-userPassword:: Yml0bmFtaTE=
+userPassword:: U1lXOGxWdGZ5SU9uUkdm
 
 dn: cn=user02,ou=users,dc=callcenter,dc=org
 objectClass: inetOrgPerson
@@ -34,24 +34,25 @@ homeDirectory: /home/user02
 sn: Bar2
 uid: user02
 uidNumber: 1001
-userPassword:: Yml0bmFtaTI=
-
-dn: cn=user03,ou=users,dc=callcenter,dc=org
-objectClass: inetOrgPerson
-objectClass: posixAccount
-objectClass: shadowAccount
-cn: user03
-cn: User3
-gidNumber: 1002
-homeDirectory: /home/user03
-sn: Bar2
-uid: user03
-uidNumber: 1002
-userPassword:: Yml0bmFtaTI=
+userPassword:: UVhHN2JUUXlQRVZBb2R5
 
 dn: cn=readers,ou=users,dc=callcenter,dc=org
 objectClass: groupOfNames
 cn: readers
 member: cn=user01,ou=users,dc=callcenter,dc=org
 member: cn=user02,ou=users,dc=callcenter,dc=org
-member: cn=user03,ou=users,dc=callcenter,dc=org
+
+dn: ou=operations,dc=callcenter,dc=org
+objectClass: organizationalUnit
+objectClass: top
+ou: operations
+
+dn: ou=sales,dc=callcenter,dc=org
+objectClass: organizationalUnit
+ou: sales
+
+dn: ou=finance,dc=callcenter,dc=org
+objectClass: organizationalUnit
+ou: finance
+ou: sales
+
